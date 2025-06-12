@@ -1,0 +1,1276 @@
+{
+	"info": {
+		"_postman_id": "43501905-ce0a-47f1-863e-61a01cbe3f76",
+		"name": "Testing_Collection",
+		"description": "Work is organized in workspace: JSONPlaceholder, one collection: Testing_Collection, 5 folders for five different kind of requests: GET, POST, PUT, PATCH and DELETE. One environment is part of this collection: Placeholder_Environment. All variables all separated in collection, environment and global variables. Dynamic variables, random numbers, generated from function defined in Pre-request Script in Testing_Collection. Two tests are same for all tests in all request: status code and response time. All other tests are specifically made for specific cases.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10821715",
+		"_collection_link": "https://www.postman.com/lunar-eclipse-220985/jsonplaceholder/collection/d1taw1u/testing-collection?action=share&source=collection_link&creator=10821715"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Get list of all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Id number correspond to user id\", function(){",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));",
+									"})",
+									"",
+									"pm.test(\"Test data type of the response for randomly choosen User\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.id).to.be.a(\"number\");",
+									"  pm.expect(jsonData.name).to.be.a(\"String\");",
+									"  pm.expect(jsonData.username).to.be.an(\"String\");",
+									"  pm.expect(jsonData.email).to.be.an(\"String\");",
+									"  pm.expect(jsonData.address).to.be.an(\"object\");",
+									"  pm.expect(jsonData.address.street).to.be.an(\"String\");",
+									"  pm.expect(jsonData.address.suite).to.be.an(\"String\");",
+									"  pm.expect(jsonData.address.city).to.be.an(\"String\");",
+									"  pm.expect(jsonData.address.zipcode).to.be.an(\"String\");",
+									"  pm.expect(jsonData.address.geo).to.be.an(\"object\");",
+									"  pm.expect(jsonData.phone).to.be.an(\"String\");",
+									"  pm.expect(jsonData.website).to.be.a(\"String\");",
+									"  pm.expect(jsonData.company).to.be.a(\"Object\");",
+									"  pm.expect(jsonData.company.name).to.be.an(\"String\");",
+									"  pm.expect(jsonData.company.catchPhrase).to.be.an(\"String\");",
+									"  pm.expect(jsonData.company.bs).to.be.an(\"String\");",
+									"",
+									"});",
+									"console.error()"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific todos by user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test todos list by user id; todos should be returned only for called User ID\", function () {",
+									"    var number=pm.environment.get('number10');",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "userId",
+								"value": "5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/?userId={{number10}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{number10}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific todos by todos ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Todos ID in response correspond to called todos id\", function(){",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"todosID\"));",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/{{todosID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"{{todosID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get album list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/albums",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific album by user ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Album showed only for specific user ID\", function () {",
+									"    var number=pm.environment.get('number10');",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/albums/?userId={{number10}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"albums",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{number10}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific album by Album ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Album ID in response correspond to called album id\", function(){",
+									"    pm.expect(jsonData.id).to.eql(parseInt(pm.collectionVariables.get(\"albumID\")));",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/albums/{{albumID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"albums",
+								"{{albumID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of photos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/photos/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"photos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific photo by Photo ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Photo ID in response correspond to called photo id\", function(){",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"photoID\"));",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/photos/{{photoID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"photos",
+								"{{photoID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific photos by Album ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Photos showed only for specific Album ID\", function () {",
+									"    var number=pm.environment.get('number100');",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    pm.expect(jsonData[0].albumId).to.eql(number);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/photos/?albumId={{number100}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"photos",
+								""
+							],
+							"query": [
+								{
+									"key": "albumId",
+									"value": "{{number100}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific comment by comment ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Comment ID in response correspond to called comment id\", function(){",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"commentID\"));",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments/{{commentID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments",
+								"{{commentID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save email and post ID from comment request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//saved email as global variable from random comment ",
+									"const jsonData = pm.response.json();",
+									"pm.globals.set(\"savedEmail\", jsonData.email)",
+									"",
+									"//saved postId as global variable",
+									"pm.globals.set(\"savedPostId\", jsonData.postId)",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments/{{commentID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments",
+								"{{commentID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific comments by post ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Comments reutrned only for appropriate postID\", function () {",
+									"    var number=pm.environment.get('number100');",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    pm.expect(jsonData[0].postId).to.eql(number);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments/?postId={{number100}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments",
+								""
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{number100}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts by specific user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Posts returned only for appropriate user ID\", function () {",
+									"    var number=pm.environment.get('number10');",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/?userId={{number10}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{number10}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific post by post ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Post ID in response correspond to called post's id\", function(){",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"postID\"));",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/{{postID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{postID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All comments for specific post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/{{number100}}/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{number100}}",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Post request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n    \"userId\": 8,\n    \"id\": 55,\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  },\n  {\n    \"userId\": 4,\n    \"id\": 44,\n    \"title\": \"Post created by Marko\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Post request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\n    \"userId\": 8,\n    \"id\": 55,\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  },\n  {\n    \"userId\": 4,\n    \"id\": 44,\n    \"title\": \"Post created by Marko\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 27 Mar 2022 14:51:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "334"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Ratelimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "X-Ratelimit-Remaining",
+									"value": "999"
+								},
+								{
+									"key": "X-Ratelimit-Reset",
+									"value": "1648392722"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, X-HTTP-Method-Override, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "-1"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "Location"
+								},
+								{
+									"key": "Location",
+									"value": "http://jsonplaceholder.typicode.com/posts/101"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"14e-1qSAuyIMsVUszVSsA4/GWV2M3bA\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=9%2B4FVspmc%2BOlGv1kgTaQrT5QnlsBovFCTrRptzkntuUdeHQTIZ5ysM652tgju0O6i2yahyr7ELQI8BhSI5PWkaPonsNBBxmwAG7uUY%2BeOa%2Bkmft2O%2BAB8XdC5k2isHRFwS%2Fe5gtaNZQoLhn3ymgS\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+								},
+								{
+									"key": "NEL",
+									"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "6f28f143da440faa-VIE"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"0\": {\n        \"userId\": 8,\n        \"id\": 55,\n        \"title\": \"Post created by Nikola\",\n        \"body\": \"This is first post request on fake api server jsonplaceholder\"\n    },\n    \"1\": {\n        \"userId\": 4,\n        \"id\": 44,\n        \"title\": \"Post created by Marko\",\n        \"body\": \"This is first post request on fake api server jsonplaceholder\"\n    },\n    \"id\": 101\n}"
+						}
+					]
+				},
+				{
+					"name": "Post request with saved value",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": {{userId}},\n    \"id\": {{postID}},\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "Put request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": 8,\n  \"title\": \"JSON placeholder put request\",\n  \"body\": \"Put request used\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Put request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": 8,\n  \"title\": \"JSON placeholder put request\",\n  \"body\": \"Put request used\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 27 Mar 2022 17:23:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "X-Ratelimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "X-Ratelimit-Remaining",
+									"value": "999"
+								},
+								{
+									"key": "X-Ratelimit-Reset",
+									"value": "1648401842"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "-1"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"65-AdI5wLfR+D27e3BL0UuwCN4t250\""
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								},
+								{
+									"key": "CF-Cache-Status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
+								},
+								{
+									"key": "Report-To",
+									"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=tszAVzFVANA275Y2wc1U9tJBWWqTdyQqUGzUUbTRNMV66LrA%2B%2FDR4ZVwxWfcXd1EFE5%2BT71Sbfowxu1dePyLH0Lx6paAljX%2BWSGD%2BcWSbtJ8jR%2FAszDqNgDGcJsONJZcmutsVt9S8Q45abCrZI9k\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+								},
+								{
+									"key": "NEL",
+									"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "6f29cfc9bb4a7891-VIE"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"userId\": 8,\n    \"title\": \"JSON placeholder put request\",\n    \"body\": \"Put request used\",\n    \"id\": 1\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "Patch request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"  pm.expect(jsonData.title.message_content).to.eql(pm.environment.get(\"savedTitle\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{savedTitle}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get post title and use for patch request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"pm.globals.set(\"savedTitle\", jsonData.title)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/{{postID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{postID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response body is empty\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var replace=randInt(1,10);",
+					"var hundred=randInt(1,100)",
+					"var twoHundred=randInt(1,200)",
+					"var fiveHundred=randInt(1,500)",
+					"var fiveThousands=randInt(1, 5000);",
+					"",
+					"pm.collectionVariables.set('todosID', twoHundred) ",
+					"pm.collectionVariables.set('id', replace) ",
+					"pm.collectionVariables.set('albumID', hundred) ",
+					"pm.collectionVariables.set('photoID', fiveThousands)",
+					"pm.collectionVariables.set('commentID', fiveHundred)",
+					"pm.collectionVariables.set('postID', hundred)",
+					"",
+					"pm.environment.set(\"number10\", replace)",
+					"pm.environment.set(\"number100\", hundred)",
+					"",
+					"function randInt(min, max) {",
+					"   return Math.round((Math.random() * Math.abs(max - min)) + min);",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200 or 201\", function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+					"});",
+					"pm.test(\"Response time is less than 1000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+					"});",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://jsonplaceholder.typicode.com",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "todosID",
+			"value": "1"
+		},
+		{
+			"key": "albumID",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "photoID",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "commentID",
+			"value": ""
+		},
+		{
+			"key": "postID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

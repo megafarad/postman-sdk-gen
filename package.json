@@ -1,0 +1,27 @@
+{
+  "name": "postman-sdk-gen",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin": {
+    "postman-sdk-gen": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/cli.ts"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "browser-or-node": "^3.0.0",
+    "commander": "^14.0.0",
+    "node-fetch": "^3.3.2",
+    "postman-collection": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.0",
+    "@types/node": "^22.15.30",
+    "@types/postman-collection": "^3.5.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
