@@ -16,7 +16,7 @@ program
     .option("--single-file", "Generate a single output file", false)
     .option("--quiet", "Suppress logs", false)
     .option("--version", "Show version", () => {
-        console.log("postman-ts-sdk v0.1.0");
+        console.log("postman-sdk-gen v0.2.0");
         process.exit(0);
     })
     .parse();

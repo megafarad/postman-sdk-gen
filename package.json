@@ -1,7 +1,7 @@
 {
   "name": "@sirhc77/postman-sdk-gen",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generate a fully-typed TypeScript SDK from a Postman collection, with support for Axios or Fetch, folder-based namespacing, and auto-inferred types.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

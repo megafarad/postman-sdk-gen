@@ -46,22 +46,31 @@ export async function generateSdk(config: SdkGenConfig): Promise<void> {
     const mainFileContents = config.singleFile ? generatedCode.importCode + generatedCode.typesCode +
         generatedCode.classCode : generatedCode.importCode + generatedCode.classCode;
 
-    writeClientFile(config.output, `${config.clientName}.ts`, mainFileContents).then(
-        filePath => {
-            if (!config.quiet) {
-                console.log(`✅ SDK written to ${filePath}`)
-            }
-        }
-    );
+    const indexFileLines: string[] = [];
+
+    const clientFilePath = await writeClientFile(config.output, `${config.clientName}.ts`,
+        mainFileContents);
+
+    if (!config.quiet) {
+        console.log(`✅ SDK written to ${clientFilePath}`);
+        indexFileLines.push(`export * from "./${config.clientName}";`);
+    }
 
     if (!config.singleFile) {
-        writeClientFile(config.output, `${config.clientName}Types.d.ts`, generatedCode.typesCode).then(
-            filePath =>  {
-                if (!config.quiet) {
-                    console.log(`✅ Types written to ${filePath}`)
-                }
-            }
-        );
+        const typesFilePath = await writeClientFile(config.output, `${config.clientName}Types.d.ts`,
+            generatedCode.typesCode);
+
+        indexFileLines.push(`export * from "./${config.clientName}Types";`);
+
+        if (!config.quiet) {
+            console.log(`✅ Types written to ${typesFilePath}`);
+        }
+    }
+
+    const indexFilePath = await writeClientFile(config.output, "index.ts", indexFileLines.join("\n"));
+
+    if (!config.quiet) {
+        console.log(`✅ Index written to ${indexFilePath}`);
     }
 
 }
